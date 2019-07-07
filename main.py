@@ -9,7 +9,6 @@ from sklearn.preprocessing import RobustScaler,MinMaxScaler
 from scipy import signal
 from scipy.stats import kurtosis
 from scipy.signal import find_peaks
-from hrvanalysis import remove_ectopic_beats
 
 def preProcessing(data,Fs=25,fil_type='ppg'):
     '''
