@@ -23,7 +23,7 @@ for participant in participants:
         files = os.listdir(final_path)
         for r in range(2):
             try:
-                data = pickle.load(open(final_path+str(r)+'event.p','rb'))
+                data = pickle.load(open(final_path+str(r)+'event_bad.p','rb'))
                 ppg_data = pd.read_csv(final_path+left_right[r],compression='gzip',sep=',',header=None).values
                 participants_col.append(participant)
                 data = data[data[:,0].argsort()]
@@ -33,16 +33,16 @@ for participant in participants:
                     total_duration +=(a[1]-a[0])/3600000
                     duration_col.append((a[1]-a[0])/1000)
 
-                ts_array = np.arange(ppg_data[0,0],ppg_data[0,0]+3600*1000,1*60*1000)
-                data_labelled = []
-                for i,t in enumerate(ts_array[:-1]):
-                    index = np.where((ppg_data[:,0]>=t)&(ppg_data[:,0]<ts_array[i+1]))[0]
-                    if len(index) < .66*25*1*60:
-                        continue
-                    ppg_window = ppg_data[index,:]
-                    upper_envelope = np.abs(signal.hilbert(ppg_window[:,4]))
-                    upper_envelope = upper_envelope -np.mean(upper_envelope)
-                    test_col.append(np.std(upper_envelope))
+                # ts_array = np.arange(ppg_data[0,0],ppg_data[0,0]+3600*1000,1*60*1000)
+                # data_labelled = []
+                # for i,t in enumerate(ts_array[:-1]):
+                #     index = np.where((ppg_data[:,0]>=t)&(ppg_data[:,0]<ts_array[i+1]))[0]
+                #     if len(index) < .66*25*1*60:
+                #         continue
+                #     ppg_window = ppg_data[index,:]
+                #     upper_envelope = np.abs(signal.hilbert(ppg_window[:,4]))
+                #     upper_envelope = upper_envelope -np.mean(upper_envelope)
+                #     test_col.append(np.std(upper_envelope))
                     # plt.figure(figsize=(16,8))
                     # plt.plot(ppg_window[:,0],ppg_window[:,4],label='Green PPG Channel',linewidth=2,color='b')
                     # ax = plt.gca()
@@ -76,8 +76,8 @@ plt.xticks([int(i) for i in range(0,int(max(duration_col)),3)],[str(i) for i in 
 plt.savefig('./images/'+str('distribution')+'.pdf',dps=1000)
 plt.show()
 
-print(np.mean(duration_col))
-import scipy
-# print(scipy.stats.kstest(test_col,'norm'))
-plt.hist(test_col)
-plt.show()
+# print(np.mean(duration_col))
+# import scipy
+# # print(scipy.stats.kstest(test_col,'norm'))
+# plt.hist(test_col)
+# plt.show()

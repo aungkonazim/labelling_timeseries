@@ -68,11 +68,12 @@ def get_feature(ppg_data,final_path,r):
         m = plot_with_span_selector(ppg_data[index,0],ppg_data[index,2],ppg_data[index,3],ppg_data[index,4])
         data_labelled.append(m)
         import os
-        if os.path.isdir(final_path):
-            pickle.dump(np.concatenate(data_labelled),open(final_path+str(r)+'event.p','wb'))
-            print(1)
+        if len(m)>0:
+            if os.path.isdir(final_path):
+                pickle.dump(np.concatenate(data_labelled),open(final_path+str(r)+'event_bad.p','wb'))
+                print(1)
 
 
 final_data = pickle.load(open('./data_saved/data_from_mperf.p','rb'))
 print(len(final_data))
-final_output = [get_feature(a[0],a[1],a[2]) for a in final_data[142:148]]
+final_output = [get_feature(a[0],a[1],a[2]) for a in final_data[33:]]
