@@ -76,4 +76,4 @@ def get_feature(ppg_data,final_path,r):
 
 final_data = pickle.load(open('./data_saved/data_from_mperf.p','rb'))
 print(len(final_data))
-final_output = [get_feature(a[0],a[1],a[2]) for a in final_data[33:]]
+final_output = [get_feature(a[0],a[1],a[2]) for a in final_data[54:]]

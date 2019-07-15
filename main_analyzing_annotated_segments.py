@@ -16,6 +16,7 @@ annotated = 0
 participants_col = []
 duration_col = []
 test_col = []
+window_col_good = []
 for participant in participants:
     file_list = os.listdir(path+'/'+participant)
     for file in file_list:
@@ -32,7 +33,10 @@ for participant in participants:
                 for a in data:
                     total_duration +=(a[1]-a[0])/3600000
                     duration_col.append((a[1]-a[0])/1000)
-
+                    # index = np.where((ppg_data[:,0]>=a[0])&(ppg_data[:,0]<=a[1]))[0]
+                    # window_col_good.append(ppg_data[index,:])
+                    # plt.plot(ppg_data[index,4])
+                    # plt.show()
                 # ts_array = np.arange(ppg_data[0,0],ppg_data[0,0]+3600*1000,1*60*1000)
                 # data_labelled = []
                 # for i,t in enumerate(ts_array[:-1]):
@@ -69,12 +73,15 @@ for participant in participants:
                 # print(e)
                 a=1
 print(total_segments,total_duration,annotated,len(np.unique(participants_col)))
-plt.hist(duration_col,bins=100)
-plt.ylabel('No of Segments')
-plt.xlabel('Seconds')
-plt.xticks([int(i) for i in range(0,int(max(duration_col)),3)],[str(i) for i in range(0,int(max(duration_col)),3)],rotation='vertical')
-plt.savefig('./images/'+str('distribution')+'.pdf',dps=1000)
-plt.show()
+# plt.hist(duration_col,bins=100)
+# plt.ylabel('No of Segments')
+# plt.xlabel('Seconds')
+# plt.xticks([int(i) for i in range(0,int(max(duration_col)),3)],[str(i) for i in range(0,int(max(duration_col)),3)],rotation='vertical')
+# plt.savefig('./images/'+str('distribution')+'.pdf',dps=1000)
+# plt.show()
+#
+# import pickle
+# pickle.dump(window_col_good,open('./data_saved/window_col_good.p','wb'))
 
 # print(np.mean(duration_col))
 # import scipy
