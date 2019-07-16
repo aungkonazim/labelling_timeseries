@@ -70,10 +70,10 @@ def get_feature(ppg_data,final_path,r):
         import os
         if len(m)>0:
             if os.path.isdir(final_path):
-                pickle.dump(np.concatenate(data_labelled),open(final_path+str(r)+'event_bad.p','wb'))
+                pickle.dump(np.concatenate(data_labelled),open(final_path+str(r)+'event_good.p','wb'))
                 print(1)
 
 
 final_data = pickle.load(open('./data_saved/data_from_mperf.p','rb'))
 print(len(final_data))
-final_output = [get_feature(a[0],a[1],a[2]) for a in final_data[54:]]
+final_output = [get_feature(a[0],a[1],a[2]) for a in final_data]
