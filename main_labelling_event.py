@@ -18,7 +18,7 @@ def plot_with_span_selector(x,y,y1,y2):
     y = y2
     ax2.set_xlim(x[0], x[-1])
     ax2.set_ylim(-3, 3)
-    ax1.set_ylim(-3, 3)
+    ax1.set_ylim(-5, 5)
     ax1.set_title('Press left mouse button and drag to test')
 
     ax2.set(facecolor='#FFFFCC')
@@ -59,21 +59,22 @@ def plot_with_span_selector(x,y,y1,y2):
 
 def get_feature(ppg_data,final_path,r):
     print(final_path)
-    ts_array = np.arange(ppg_data[0,0],ppg_data[0,0]+3600*1000,2*60*1000)
+    ts_array = np.arange(ppg_data[0,0],ppg_data[0,0]+3600*1000,.5*60*1000)
     data_labelled = []
     for i,t in enumerate(ts_array[:-1]):
         index = np.where((ppg_data[:,0]>=t)&(ppg_data[:,0]<ts_array[i+1]))[0]
-        if len(index) < .66*25*2*60:
+        if len(index) < .66*25*.5*60:
             continue
         m = plot_with_span_selector(ppg_data[index,0],ppg_data[index,2],ppg_data[index,3],ppg_data[index,4])
         data_labelled.append(m)
         import os
         if len(m)>0:
             if os.path.isdir(final_path):
-                pickle.dump(np.concatenate(data_labelled),open(final_path+str(r)+'event_good.p','wb'))
+                pickle.dump(np.concatenate(data_labelled),open(final_path+str(r)+'event_bad.p','wb'))
                 print(1)
 
 
 final_data = pickle.load(open('./data_saved/data_from_mperf.p','rb'))
 print(len(final_data))
-final_output = [get_feature(a[0],a[1],a[2]) for a in final_data]
+import os
+final_output = [get_feature(a[0],a[1],a[2]) for a in final_data if not os.path.isfile(a[1]+str(a[2])+'event_bad.p')]

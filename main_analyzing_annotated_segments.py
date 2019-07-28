@@ -24,7 +24,7 @@ for participant in participants:
         files = os.listdir(final_path)
         for r in range(2):
             try:
-                data = pickle.load(open(final_path+str(r)+'event_good.p','rb'))
+                data = pickle.load(open(final_path+str(r)+'event_bad.p','rb'))
                 # ppg_data = pd.read_csv(final_path+left_right[r],compression='gzip',sep=',',header=None).values
                 participants_col.append(participant)
                 data = data[data[:,0].argsort()]
